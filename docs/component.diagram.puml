@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+frame "SIRI-SX Situation Map" {
+    [Map] as M
+    [Leaflet] as L
+    [DiDok Service] as D
+    [SIRI-SX Service] as S
+    [OSM Service] as OSM
+    [Operator Service] as O
+    () "CORS Proxy" as C
+    M .> L : uses
+    M ..> D : uses
+    M ..> S : uses
+    M ..> OSM : uses
+    D -- C
+    S -- C
+    OSM .> O : uses
+}
+
+cloud "Internet" {
+    [Overpass API (CH)] as O_API
+    [OpenTransportData Swiss API] as OTD_API
+}
+
+C --> OTD_API
+OSM --> O_API
+@enduml
