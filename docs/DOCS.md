@@ -84,11 +84,6 @@ A simple improvement is to collect these queries to one big query and only ask o
 
 #### Map Component Refactoring
 
-Right now the map component is our most complex piece of code and is ready to be refactored.
-We created a sequence diagramm to help understand what the component does.
-
-#### Map Component Refactoring
-
 Right now the map component is our most complex piece of code and is in a need of a refactoring.
 We created a sequence diagramm to help understand what the component does.
 
