@@ -1,0 +1,38 @@
+# Before use, create a file "http-client.private.env.json" and add the test-token and int-token and prod-token in json format.
+# It should look something like this:
+# {
+#   "odp": {
+#     "test-token": "<your-test-token>",
+#     "int-token": "<your-int-token>"
+#     "token": "<your-prod-token>"
+#   }
+# }
+
+### Get Test ODP Messages
+GET https://odpch-api.clients.liip.ch/siri-sx_test
+Authorization: Bearer {{test-token}}
+Content-Type: application/xml
+
+### Get Int ODP Messages
+GET https://odpch-api.clients.liip.ch/siri-sx_int
+Authorization: Bearer {{int-token}}
+Content-Type: application/xml
+
+### Get PROD ODP Messages
+GET https://api.opentransportdata.swiss/siri-sx
+Authorization: Bearer {{token}}
+Content-Type: application/xml
+
+### get resources
+POST https://opentransportdata.swiss/en/api/3/action/datastore_info
+Content-Type: application/json
+Origin: https://opentransportdata.swiss
+Referer: https://opentransportdata.swiss
+
+{"resource_id":"4c7426b9-bf21-4127-8721-73824c543fa3"}
+
+### get ids
+POST https://opentransportdata.swiss/en/api/3/action/get_all_ids
+Content-Type: application/json
+Origin: https://opentransportdata.swiss
+Referer: https://opentransportdata.swiss

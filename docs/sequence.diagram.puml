@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+participant "Siri SX Situation Map" as Map
+participant "SIRI SX Service" as S
+participant "OSM Service" as OSM
+participant "Operator Service" as O
+participant "DiDok Service" as D
+
+activate Map
+
+Map -> S : load siri sx situations
+activate S
+S --> Map : return siri sx situations
+deactivate S
+
+Map -> D : load stations
+activate D
+D --> Map : list of didok results
+deactivate D
+
+loop for all situations
+
+    loop for all lines
+        Map -> OSM : load line
+        activate OSM
+        OSM -> O : resolve operator
+        activate O
+        O --> OSM : operator
+        deactivate O
+        OSM --> Map : geojson
+        deactivate OSM
+        Map -> Map : draw line
+    end
+
+    loop for all stopPlaces
+        Map -> Map : draw stopPlace
+    end
+end
+
+deactivate Map
+@enduml
