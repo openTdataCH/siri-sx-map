@@ -31,13 +31,13 @@ The project would be a first step in this direction and would include the follow
 
 ## Supervisors
 
-- [Michael Luggen](https://gitlab.ti.bfh.ch/lgm5)
-- [Roger Kneubühl](https://gitlab.ti.bfh.ch/ext-kner2), roger.kneubuehl@sbb.ch
-- [Griesser Martin](https://gitlab.ti.bfh.ch/ext-grim1), martin.griesser@sbb.ch
+- Michael Luggen
+- Roger Kneubühl, roger.kneubuehl@sbb.ch
+- Griesser Martin, martin.griesser@sbb.ch
 
 ## Authors
 
-- [Blättler Christian](https://gitlab.ti.bfh.ch/blatc2)
-- [Bürgi Tobias](https://gitlab.ti.bfh.ch/burgt2)
-- [Hunziker Nathanaël](https://gitlab.ti.bfh.ch/hunzn3)
+- [Blättler Christian](https://github.com/cblaettl)
+- [Bürgi Tobias](https://github.com/Tandoraz)
+- [Hunziker Nathanaël](https://github.com/experiencedGAWSER)
 

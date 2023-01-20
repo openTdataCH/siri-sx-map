@@ -89,8 +89,8 @@ We created a sequence diagramm to help understand what the component does.
 
 #### XML Schema Definition
 
-We didn't get a XSD for the SIRI-SX api, this is why we parsed the data with plain js.
-We suggest to ask for a XSD or create one yourself, so the parsing can be removed and the code can be simplified.
+We didn't get access to a XSD for the SIRI-SX api, this is why we parsed the data with plain js.
+We suggest to ask for a XSD, so the parsing can be removed and the code can be simplified.
 
 ## Development
 
