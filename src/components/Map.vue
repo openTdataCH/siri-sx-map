@@ -73,22 +73,14 @@ async function loadMap() {
   timer.stop();
   loading.value = true;
 
+  markers.clear();
+  lines.clear();
+
   try {
-    situations.value = await SiriService.getSituations(
-      props.language,
-      props.textSize,
-      props.ownerRefs,
-      props.perspective,
-      props.onlyActive
-    );
+    situations.value = await SiriService.getSituations(props.language, props.textSize, props.ownerRefs, props.perspective, props.onlyActive);
     const sloids = new Set<string>();
     situations.value.forEach((s) => s.affects.stopPlaces.forEach((p) => sloids.add(p.sloId)));
     stopPlaces = await DidokService.loadFromQuery(Array.from(sloids));
-    // If api makes problems use local didok file
-    // stopPlaces = await DidokService.loadFromDisk();
-
-    markers.clear();
-    lines.clear();
 
     for (const situation of situations.value) {
       // aggregate affected lines
@@ -153,9 +145,10 @@ async function loadMap() {
     console.error(error);
   } finally {
     loading.value = false;
-    timer.start()
+    timer.start();
   }
 }
+
 watchEffect(loadMap);
 
 const attribution = '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
@@ -178,9 +171,9 @@ const tile = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
         }"
       ></LGeoJson>
 
-      <LineComponent v-for="line of lines.values()" :line="line" />
+      <LineComponent v-for="line of lines.values()" :line="line" :key="line.ref" />
 
-      <MarkerComponent v-for="marker of markers.values()" :marker="marker" />
+      <MarkerComponent v-for="marker of markers.values()" :marker="marker" :key="marker.sloId" />
     </LMap>
   </div>
 </template>
