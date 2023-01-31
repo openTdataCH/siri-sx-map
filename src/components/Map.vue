@@ -68,13 +68,14 @@ const markers = reactive(new Map<string, Marker>());
 let situations: Ref<Situation[]> = ref([]);
 
 const loading = ref(false);
+let loadCall = 0;
 
 async function loadMap() {
+  loadCall++;
+  let loadCallWhenStarted = loadCall;
+
   timer.stop();
   loading.value = true;
-
-  markers.clear();
-  lines.clear();
 
   try {
     situations.value = await SiriService.getSituations(props.language, props.textSize, props.ownerRefs, props.perspective, props.onlyActive);
@@ -82,9 +83,18 @@ async function loadMap() {
     situations.value.forEach((s) => s.affects.stopPlaces.forEach((p) => sloids.add(p.sloId)));
     stopPlaces = await DidokService.loadFromQuery(Array.from(sloids));
 
+    markers.clear();
+    lines.clear();
+
     for (const situation of situations.value) {
+      if (loadCall !== loadCallWhenStarted) {
+        return;
+      }
       // aggregate affected lines
       for (const affectedLine of situation.affects.lines) {
+        if (loadCall !== loadCallWhenStarted) {
+          return;
+        }
         const line = lines.get(affectedLine.ref);
 
         if (!line) {
@@ -117,6 +127,9 @@ async function loadMap() {
 
       // aggregate affected stop places
       for (const stopPlace of situation.affects.stopPlaces) {
+        if (loadCall !== loadCallWhenStarted) {
+          return;
+        }
         const sloId = stopPlace.sloId;
         const marker = markers.get(sloId);
 
