@@ -41,7 +41,7 @@ function openInNewWindow() {
   url.searchParams.set('perspective', perspective.value);
   url.searchParams.set('zoom', mapZoom.value.toString());
   url.searchParams.set('center', mapCenter.value.join(','));
-  url.searchParams.set('active', onlyActive ? '1' : '0');
+  url.searchParams.set('active', onlyActive.value ? '1' : '0');
   window.open(url, '_blank');
 }
 </script>
