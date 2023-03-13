@@ -81,7 +81,9 @@ async function loadMap() {
     situations.value = await SiriService.getSituations(props.language, props.textSize, props.ownerRefs, props.perspective, props.onlyActive);
     const sloids = new Set<string>();
     situations.value.forEach((s) => s.affects.stopPlaces.forEach((p) => sloids.add(p.sloId)));
-    stopPlaces = await DidokService.loadFromQuery(Array.from(sloids));
+    if (sloids.size > 0) {
+      stopPlaces = await DidokService.loadFromQuery(Array.from(sloids));
+    }
 
     markers.clear();
     lines.clear();
