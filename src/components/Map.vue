@@ -54,7 +54,7 @@ const props = defineProps({
 
 const emits = defineEmits<{
   (event: 'update:center', center: PropType<[number, number]>): void;
-  (event: 'update:zoom', zoom: Number): void;
+  (event: 'update:zoom', zoom: number): void;
 }>();
 
 const timer = new Timer(() => loadMap(), 60 * 1000);
@@ -79,10 +79,8 @@ async function loadMap() {
 
   try {
     situations.value = await SiriService.getSituations(props.language, props.textSize, props.ownerRefs, props.perspective, props.onlyActive);
-    const sloids = new Set<string>();
-    situations.value.forEach((s) => s.affects.stopPlaces.forEach((p) => sloids.add(p.sloId)));
-    if (sloids.size > 0) {
-      stopPlaces = await DidokService.loadFromQuery(Array.from(sloids));
+    if (situations.value.some((s) => s.affects.stopPlaces.length > 0)) {
+      stopPlaces = await DidokService.load();
     }
 
     markers.clear();
@@ -102,7 +100,7 @@ async function loadMap() {
         if (!line) {
           try {
             const cachedItem = cachedLines.get(affectedLine.ref);
-            const geoJson = cachedItem ? cachedItem : await OsmService.getLine(affectedLine.ref, affectedLine.name);
+            const geoJson = cachedItem || (await OsmService.getLine(affectedLine.ref, affectedLine.name));
 
             if (geoJson.features.length <= 0) {
               console.warn(

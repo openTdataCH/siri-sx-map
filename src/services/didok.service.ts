@@ -1,37 +1,69 @@
 import type { DiDokRecord } from '@/models/didok';
+import * as zip from '@zip.js/zip.js';
 
 export class DidokService {
-  private static readonly DIDOK_URL = '/odp/en/dataset/didok';
+  private static readonly DIDOK_URL = '/odp/de/dataset/service-points-actual-date';
 
-  private static didokResource?: string = undefined;
+  private static records = new Map<string, DiDokRecord>();
 
-  private static async getDiDokResource() {
-    if (this.didokResource) return this.didokResource;
-    const didokSite = await fetch(this.DIDOK_URL);
-    const dom = new DOMParser().parseFromString(await didokSite.text(), 'text/html');
-    const url = (dom.querySelector('a[title="Dienststellen_actualdate.csv"]') as HTMLLinkElement).href;
-    return url.substring(url.lastIndexOf('/') + 1);
+  private static didokResourceLink?: string = undefined;
+
+  public static async load() {
+    if (this.records.size === 0) {
+      await this.loadFromZip();
+    }
+    return this.records;
   }
 
-  public static async loadFromQuery(sloids: string[]): Promise<Map<string, DiDokRecord>> {
-    const resourceId = await this.getDiDokResource();
+  private static async fetchDidokLink(): Promise<string> {
+    if (this.didokResourceLink) return this.didokResourceLink;
+    const html = await fetch(this.DIDOK_URL);
+    const doc = new DOMParser().parseFromString(await html.text(), 'text/html');
+    const link = (doc.querySelector('.resource-item a[download]') as HTMLLinkElement).href;
+    this.didokResourceLink = link.replace('https://opentransportdata.swiss', '/odp');
+    return this.didokResourceLink;
+  }
 
-    const result = await fetch('/odp/en/api/3/action/datastore_search_sql', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        sql: `select "SLOID", "E_WGS84", "N_WGS84" from "${resourceId}" where "E_WGS84" is not null and "N_WGS84" is not null and "SLOID" in (${sloids
-          .map((id) => `'${id}'`)
-          .join(',')});`,
-      }),
+  private static async loadFromZip() {
+    const link = await this.fetchDidokLink();
+    const reader = new zip.ZipReader(new zip.HttpReader(link, { preventHeadRequest: true }), { useWebWorkers: true });
+    const entries = await reader.getEntries();
+
+    if (entries.length && entries[0]) {
+      const csv = entries[0];
+      const csvText = await csv.getData?.(new zip.TextWriter(), {});
+
+      this.records = this.parseCSV(csvText as string);
+    }
+    await reader.close();
+  }
+
+  private static parseCSV(csv: string): Map<string, DiDokRecord> {
+    const result = new Map<string, DiDokRecord>();
+    let sloidIndex = 0;
+    let wgs84NorthIndex = 0;
+    let wgs84EastIndex = 0;
+    csv.split('\n').forEach((line, i) => {
+      const cells = line.split(';');
+      if (i === 0) {
+        [sloidIndex, wgs84NorthIndex, wgs84EastIndex] = this.findHeaderIndex(cells);
+      } else {
+        const n = cells[wgs84NorthIndex];
+        const e = cells[wgs84EastIndex];
+        const sloid = cells[sloidIndex];
+        if (e && n) {
+          result.set(sloid, { SLOID: sloid, N_WGS84: n, E_WGS84: e });
+        }
+      }
     });
+    return result;
+  }
 
-    const json = await result.json();
-    const records = new Map<string, DiDokRecord>();
-    json.result.records.forEach((r: DiDokRecord) => records.set(r.SLOID, r));
-    return records;
+  private static findHeaderIndex(headers: string[]): [number, number, number] {
+    return [
+      headers.findIndex((e) => e === 'sloid'),
+      headers.findIndex((e) => e === 'wgs84North'),
+      headers.findIndex((e) => e === 'wgs84East')
+    ];
   }
 }

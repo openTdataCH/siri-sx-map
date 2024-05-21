@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@vue-leaflet/vue-leaflet": "^0.6.1",
+    "@zip.js/zip.js": "^2.7.44",
     "leaflet": "^1.8.0",
     "osmtogeojson": "^3.0.0-beta.5",
     "stream": "^0.0.2",
