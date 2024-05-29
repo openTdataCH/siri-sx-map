@@ -4,8 +4,11 @@ As part of the Project 1 module in the Bern University of Applied Sciences (BFH)
 
 ## Description
 
-The SBB starts to publish disruption messages as SIRI SX messages [(XML)](https://www.vdv.de/736-2-sds.pdfx). These messages can be requested and visualized.\
-The [interface](https://transportdatamanagement.ch/content/uploads/2020/11/Architektur_Ereignisdatenaustausch.pdf) is still under construction.
+The SBB starts to publish disruption messages as SIRI SX messages [(XML)](https://www.vdv.de/736-2-sds.pdfx). These messages can be requested and visualized. \
+The current interface to the disruption data is specified here:
+- https://www.xn--v-info-vxa.ch/de/branchenstandard/technische-standards/ereignisdaten
+- https://www.xn--v-info-vxa.ch/sites/default/files/2023-04/architektur_ereignisdatenaustausch.pdf
+
 A first visualization gives hints how and if it can be worked with.\
 The project would be a first step in this direction and would include the following:
 
@@ -22,6 +25,10 @@ The project would be a first step in this direction and would include the follow
     <a href="https://leafletjs.com/"><img title="Leaflet" src="https://raw.githubusercontent.com/Leaflet/Leaflet/main/src/images/logo.svg" height="90" /></a>
     <a href="https://www.openstreetmap.org/"><img title="OpenStreetMap (osm)" src="https://wiki.openstreetmap.org/w/images/7/79/Public-images-osm_logo.svg" height="100" /></a>
 </div>
+
+## Demo
+
+[Demo Link](https://tools.odpch.ch/siri-sx-map/setup)
 
 ## More Inforamtion
 

@@ -18,13 +18,10 @@
 
 ## Initial Situation & Goal
 
-The SBB starts to publish disruption messages as SIRI SX
-messages ([XML](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwj59YT60pD2AhWLhv0HHXnzDy4QFnoECBAQAQ&url=https://www.vdv.de/736-2-sds.pdfx&usg=AOvVaw2h5n4Vftl94idzP4b920nF))
-request/response.
-These messages can be requested and visualized.
-The [interface](https://transportdatamanagement.ch/content/uploads/2020/11/Architektur_Ereignisdatenaustausch.pdf) is
-still under construction. A first
-visualization gives hints how and if it can be worked with.\
+The SBB starts to publish disruption messages as SIRI SX messages ([XML](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwj59YT60pD2AhWLhv0HHXnzDy4QFnoECBAQAQ&url=https://www.vdv.de/736-2-sds.pdfx&usg=AOvVaw2h5n4Vftl94idzP4b920nF)) request/response. These messages can be requested and visualized.
+The current interface to the disruption data is specified here:
+- https://www.xn--v-info-vxa.ch/de/branchenstandard/technische-standards/ereignisdaten
+- https://www.xn--v-info-vxa.ch/sites/default/files/2023-04/architektur_ereignisdatenaustausch.pdf
 
 The project would be a first step in this direction and would include the following:
 
@@ -182,8 +179,5 @@ The parameters above are configurable via the `/setup` url.
 The URL can be then embedded in an HTML IFrame as in the following example:
 
 ```html
-
-<iframe
-        width="100%" height="500"
-        src="http://localhost:5173"></iframe>
+<iframe width="100%" height="500" src="https://tools.odpch.ch/siri-sx-map/"></iframe>
 ```
