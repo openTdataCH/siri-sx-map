@@ -2,7 +2,7 @@ import type { DiDokRecord } from '@/models/didok';
 import * as zip from '@zip.js/zip.js';
 
 export class DidokService {
-  private static readonly DIDOK_URL = '/odp/de/dataset/service-points-actual-date';
+  private static readonly DIDOK_URL = 'https://data.opentransportdata.swiss/dataset/service-points-actual-date';
 
   private static records = new Map<string, DiDokRecord>();
 
