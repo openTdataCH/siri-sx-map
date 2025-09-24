@@ -20,7 +20,7 @@ export class DidokService {
     const html = await fetch(this.DIDOK_URL);
     const doc = new DOMParser().parseFromString(await html.text(), 'text/html');
     const link = (doc.querySelector('.resource-item a[download]') as HTMLLinkElement).href;
-    this.didokResourceLink = link.replace('https://opentransportdata.swiss', '/odp');
+    this.didokResourceLink = link;
     return this.didokResourceLink;
   }
 
