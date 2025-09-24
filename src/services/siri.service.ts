@@ -9,7 +9,8 @@ export class SiriService {
     textSize: TextSize,
     ownerRefs: Array<string>,
     perspective: string,
-    onlyActive: boolean
+    onlyActive: boolean,
+    onlyUnplanned: boolean,
   ): Promise<Situation[]> {
     const url = this.ODP_URL + '?rand=' + Date.now().toString();
 
@@ -38,6 +39,10 @@ export class SiriService {
         }
 
         if (onlyActive && !situation.isValid()) {
+          continue;
+        }
+
+        if (onlyUnplanned && situation.planned) {
           continue;
         }
 

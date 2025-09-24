@@ -40,4 +40,5 @@ export interface FilterModel {
   zoom: number;
   center: [number, number];
   active: boolean;
+  unplanned: boolean;
 }

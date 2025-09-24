@@ -50,6 +50,10 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+  onlyUnplanned: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const emits = defineEmits<{
@@ -78,7 +82,7 @@ async function loadMap() {
   loading.value = true;
 
   try {
-    situations.value = await SiriService.getSituations(props.language, props.textSize, props.ownerRefs, props.perspective, props.onlyActive);
+    situations.value = await SiriService.getSituations(props.language, props.textSize, props.ownerRefs, props.perspective, props.onlyActive, props.onlyUnplanned);
     if (situations.value.some((s) => s.affects.stopPlaces.length > 0)) {
       stopPlaces = await DidokService.load();
     }
