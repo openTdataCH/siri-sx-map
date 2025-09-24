@@ -1,7 +1,6 @@
 import { Language, Situation, TextSize } from '@/models/situation';
 
 export class SiriService {
-  // private static readonly ODP_URL = '/odp-siri/siri-sx';
   private static readonly ODP_URL = 'https://tools.odpch.ch/siri-sx-data/siri_sx-latest-prod.xml';
   private static readonly PARSER = new DOMParser();
 
