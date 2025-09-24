@@ -2,7 +2,7 @@ import type { DiDokRecord } from '@/models/didok';
 import * as zip from '@zip.js/zip.js';
 
 export class DidokService {
-  private static readonly DIDOK_URL = '/odp/de/dataset/service-points-actual-date';
+  private static readonly DIDOK_URL = 'https://data.opentransportdata.swiss/dataset/service-points-actual-date';
 
   private static records = new Map<string, DiDokRecord>();
 
@@ -20,7 +20,7 @@ export class DidokService {
     const html = await fetch(this.DIDOK_URL);
     const doc = new DOMParser().parseFromString(await html.text(), 'text/html');
     const link = (doc.querySelector('.resource-item a[download]') as HTMLLinkElement).href;
-    this.didokResourceLink = link.replace('https://opentransportdata.swiss', '/odp');
+    this.didokResourceLink = link;
     return this.didokResourceLink;
   }
 
