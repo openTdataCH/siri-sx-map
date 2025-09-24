@@ -25,6 +25,10 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+  onlyUnplanned: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const emits = defineEmits<{
@@ -33,6 +37,7 @@ const emits = defineEmits<{
   (event: 'update:ownerRefs', ownerRef: Array<string>): void;
   (event: 'update:perspective', perspective: string): void;
   (event: 'update:onlyActive', activeOnly: boolean): void;
+  (event: 'update:onlyUnplanned', unplannedOnly: boolean): void;
   (event: 'createSituationMap'): void;
 }>();
 
@@ -60,6 +65,11 @@ const updatePrespective = (event: Event) => {
 const updateOnlyActive = (event: Event) => {
   const value = (event.target as HTMLInputElement).checked;
   emits('update:onlyActive', value);
+};
+
+const updateOnlyUnplanned = (event: Event) => {
+  const value = (event.target as HTMLInputElement).checked;
+  emits('update:onlyUnplanned', value);
 };
 </script>
 
@@ -90,8 +100,11 @@ const updateOnlyActive = (event: Event) => {
       <option value="L">Large</option>
     </select>
 
-    <label for="active">Show only active</label>
+    <label for="active">Active only</label>
     <input id="active" name="active" type="checkbox" :checked="onlyActive" @change="updateOnlyActive($event)" />
+
+    <label for="unplanned">Unplanned only</label>
+    <input id="unplanned" name="unplanned" type="checkbox" :checked="onlyUnplanned" @change="updateOnlyUnplanned($event)" />
 
     <input type="submit" value="Create Situation Map (new window)" @click="emits('createSituationMap')" />
   </form>

@@ -157,7 +157,8 @@ All parameters are optional and the default value are used.
 | perspective | ` `, `general`, `stopPoint`, `vehicleJourney` | ` `        | Perspective of the disturbance information. Default are shown all perspectives.                                                                          |
 | zoom        | Number                                        | 8          | The Zoom level of the map                                                                                                                                |
 | center      | String                                        | `46.8,8.2` | The center position of the map as comma seperated `lat`,`lng`                                                                                            |
-| active      | `1`                                           |            | Show only active situation                                                                                                                               |
+| active  | `1` |  | Show only active situations |
+| unplanned  | `1` |  | Show only unplanned situations |
 
 ### URL configurator
 

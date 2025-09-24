@@ -1,7 +1,6 @@
 import { Language, Situation, TextSize } from '@/models/situation';
 
 export class SiriService {
-  // private static readonly ODP_URL = '/odp-siri/siri-sx';
   private static readonly ODP_URL = 'https://tools.odpch.ch/siri-sx-data/siri_sx-latest-prod.xml';
   private static readonly PARSER = new DOMParser();
 
@@ -10,7 +9,8 @@ export class SiriService {
     textSize: TextSize,
     ownerRefs: Array<string>,
     perspective: string,
-    onlyActive: boolean
+    onlyActive: boolean,
+    onlyUnplanned: boolean,
   ): Promise<Situation[]> {
     const url = this.ODP_URL + '?rand=' + Date.now().toString();
 
@@ -39,6 +39,10 @@ export class SiriService {
         }
 
         if (onlyActive && !situation.isValid()) {
+          continue;
+        }
+
+        if (onlyUnplanned && situation.planned) {
           continue;
         }
 
