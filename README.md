@@ -28,7 +28,7 @@ The project would be a first step in this direction and would include the follow
 
 ## Demo
 
-[Demo Link](https://tools.odpch.ch/siri-sx-map/setup)
+https://tools.opentransportdata.swiss/siri-sx/map/setup
 
 ## More Inforamtion
 
