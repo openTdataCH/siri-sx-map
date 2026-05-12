@@ -1,7 +1,7 @@
 import { Language, Situation, TextSize } from '@/models/situation';
 
 export class SiriService {
-  private static readonly ODP_URL = 'https://tools.odpch.ch/siri-sx-data/siri_sx-latest-prod.xml';
+  private static readonly ODP_URL = 'https://tools.opentransportdata.swiss/data/siri-sx/siri_sx-latest-prod.xml';
   private static readonly PARSER = new DOMParser();
 
   public static async getSituations(
