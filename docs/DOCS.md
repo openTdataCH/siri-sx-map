@@ -180,5 +180,5 @@ The parameters above are configurable via the `/setup` url.
 The URL can be then embedded in an HTML IFrame as in the following example:
 
 ```html
-<iframe width="100%" height="500" src="https://tools.odpch.ch/siri-sx-map/"></iframe>
+<iframe width="100%" height="500" src="https://tools.opentransportdata.swiss/siri-sx/map/"></iframe>
 ```
